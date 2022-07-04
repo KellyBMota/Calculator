@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Calculator";
+}
+
+@model OperationViewModel
+
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+
+<div>
+    <h1>Calculator</h1>
+</div>
+
+<form asp-controller="Home" asp-action="Index" method="post">  
+    <div class="form-group">  
+        <div class="number">  
+            @Html.LabelFor(model => model.Number1)  
+            @Html.TextBoxFor(model => model.Number1, new { @type = "number", autocomplete="off" })
+            <div class="error">@Html.ValidationMessageFor(model => model.Number1)</div>
+            
+        </div>  
+        <div class="number">  
+            @Html.LabelFor(model => model.Number2)  
+            @Html.TextBoxFor(model => model.Number2, new { @type = "number", autocomplete="off" })
+            <div class="error">@Html.ValidationMessageFor(model => model.Number2)</div>
+        </div>  
+        <div class="type">  
+            @Html.LabelFor(model => model.Type)
+            <div class="error">@Html.ValidationMessageFor(model => model.Type)</div>
+            @foreach (var type in Enum.GetValues(typeof(OperationType)))
+            {
+                <div class="type-element">
+                @Html.RadioButtonFor(model => model.Type, type) @type.ToString()
+                </div>
+            }            
+        </div> 
+        
+        <div class="button">  
+            <input type="submit" value="Submit" asp-action="Index" />  
+        </div> 
+        
+        <div class="number">  
+            @Html.LabelFor(model => model.Result)  
+            @Html.TextBoxFor(model => model.Result, new { @type = "number", @min = "0", @step = "0.01", @value = "0", @disabled="disabled" })
+        </div>  
+        <div class="error">@Html.ValidationMessage("Error")</div>
+    </div>  
+</form>  
